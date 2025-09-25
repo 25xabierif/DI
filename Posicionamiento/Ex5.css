@@ -1,0 +1,46 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.container{
+    display: grid;
+    height: 80vh;
+    width: 70vw;
+    gap: 10px;
+}
+.verdoso{
+    background-color: aquamarine;
+    grid-column: 1/4;
+    grid-row: 1/5;
+}
+.verde{
+    background-color: green;
+    grid-column: 4/6;
+    grid-row: 1/3;
+}
+.rojo{
+    background-color: red;
+    grid-column: 1/2;
+    grid-row: 5;
+}
+.naranja{
+    background-color: orange;
+    grid-column: 1/2;
+    grid-row: 6/9;
+}
+.magenta{
+    background-color: fuchsia;
+    grid-column: 2/4;
+    grid-row: 5/9;
+}
+.azul{
+    background-color: midnightblue;
+    grid-column: 4/6;
+    grid-row: 3/8;
+}
+.beige{
+    background-color: burlywood;
+    grid-column: 4/6;
+    grid-row: 8;
+}

@@ -1,0 +1,110 @@
+.html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.verde{
+    background-color: darkgreen;
+}
+.azul{
+    background-color: blue;
+}
+.rojo{
+    background-color: red;
+}
+.morado{
+    background-color: blueviolet;
+}
+.container{
+    display: grid;
+    grid-template-rows: 4;
+    grid-template-columns: 2;
+    width: 70vw;
+    height: 40vh;
+    border: 1px solid black;
+    padding: 3px;
+}
+.arr-izq{
+    grid-row: 1 / span 2;
+    margin: 2px;
+}
+.ab-izq{
+    grid-row: 3 / span 2;
+    margin: 2px;
+}
+.arr-der{
+    grid-row: 1 / span 1;
+    margin: 2px;
+}
+.ab-der{
+    grid-row: 2 / span 3;
+    margin: 2px;
+}
+.container1{
+    display: flex;
+    flex-wrap: wrap;
+    width: 70vw;
+    height: 40vh;
+    border: 1px solid black;
+    padding: 3px;
+}
+.bloque1{
+    display: flex;
+    flex-direction: column;
+    flex: 50%;
+    height: inherit;
+}
+.bloque2{
+    display: flex;
+    flex-direction: column;
+    flex: 50%;
+    height: inherit;
+}
+.arr-izq1{
+    margin: 2px;
+    flex: 50%;
+}
+.ab-izq1{
+    margin: 2px;
+    flex: 50%;
+}
+.arr-der1{
+    margin: 2px;
+    flex: 50%;
+    height: 40vh;
+}
+.ab-der1{
+    margin: 2px;
+    flex: 55vh;
+}
+.container2{
+    border: 1px solid black;
+    overflow: hidden;
+    width: 70vw;
+    height: 40vh;
+    padding: 3px;
+}
+.arr-izq2{
+    float: left;
+    margin: 2px;
+    height: 50%;
+    width: 49.6%;
+}
+.ab-izq2{
+    float: left;
+    margin: 2px;
+    height: 50%;
+    width: 49.6%;
+}
+.arr-der2{
+    float: right;
+    margin: 2px;
+    height: 25%;
+    width: 49.6%;
+}
+.ab-der2{
+    float: right;
+    margin: 2px;
+    height: 75%;
+    width: 49.6%;
+}

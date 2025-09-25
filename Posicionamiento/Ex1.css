@@ -1,0 +1,48 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.azul{
+    background-color: blue;
+}
+.blanca{
+    background-color: white;
+}
+.roja{
+    background-color: red;
+}
+.bandera{
+    border: 1px dotted black;
+    display: flex;
+    width: 100vw;
+    height: 30vh;
+}
+.franja{
+    width: 33%;
+    height: auto;
+}
+
+.bandera2{
+    border: 1px dotted black;
+    width: 100vw;
+    height: 30vh;
+    margin-top: 1vh;
+}
+.franja2{
+    float: left;
+    width: 33%;
+    height: 100%;
+}
+.bandera3{
+    border: 1px dotted black;
+    display: inline-grid;
+    justify-content: center;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    margin-top: 1vh;
+}
+.franja3{
+    width: 33vw;
+    height: 30vh;
+}
