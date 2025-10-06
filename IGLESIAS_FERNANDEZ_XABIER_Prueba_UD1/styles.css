@@ -1,0 +1,88 @@
+html, body{
+    margin: 0;
+    height: 100%;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+.main-header, .nav, .main-footer{
+    background-color:steelblue;
+    margin: 1%;
+}
+.main-header{
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.center{
+    display: grid;
+    height: 70vh;
+    gap: 10px;
+    margin: 1%;
+}
+.nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    grid-column: 2/6;
+    background-color: steelblue;
+}
+.main span{
+    margin-bottom: 35px;
+}
+.grid_productos{
+    background-color: darkkhaki;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 98%;
+    height: 70%;
+    gap: 5px;
+    padding: 5px;
+}
+.producto{
+    background-color: darkgreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+.main-footer{
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.paginacion {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 20px;
+    background-color: #001f4d;
+    padding: 8px 50px;
+    border-radius: 8px;
+}
+
+.paginacion a {
+    padding: 8px 12px;
+    background-color: royalblue;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.paginacion a:hover {
+    background-color: indigo;
+}
+.paginacion .activo{
+    background: indigo;
+}

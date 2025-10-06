@@ -9,6 +9,9 @@ public class Principal{
         proba2.añadirBoton("Aceptar","Aceptado");
         proba2.añadirBoton("Cancelar","Cancelado"); */
 
+        Ex3 proba3 = new Ex3("Exercicio3");
+
+        proba3.añadirBoton("Botón");
         
     }
 }
