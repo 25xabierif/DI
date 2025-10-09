@@ -9,33 +9,27 @@ su nombre y un botón. Al hacer clic en el botón, debe mostrar en la
 consola el nombre que el usuario ha introducido */
 
     private final JFrame window;
-    private JButton boton;
-    private JTextField campoTexto;
     String mensaje;
 
     public Ex3 (String nombre){
-        this.window = new JFrame(nombre);
-        this.window.setSize(400,200);
-        this.window.setLayout(new FlowLayout());
-        this.window.setLocationRelativeTo(null);
-        this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window = new JFrame(nombre);
+        window.setSize(800,600);
 
-        JTextField campoTexto = new JTextField("Introduce tu nombre aquí...",20);
+        JTextField campoTexto = new JTextField("Introduce tu nombre aquí...");
+        window.setLocationRelativeTo(null);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.window.add(campoTexto);
-
-        this.window.setVisible(true);
-    }
-
-    
-
-    public void añadirBoton(String textoBoton){
-        this.mensaje = campoTexto.getText();
-        this.boton = new JButton(textoBoton);
-        this.boton.addActionListener((ActionEvent e) -> {
-            JOptionPane.showMessageDialog(this.window, mensaje);
+        JButton boton = new JButton("Pulse aquí");
+        boton.addActionListener((ActionEvent e) -> {
+            String textoActual = campoTexto.getText();
+            JOptionPane.showMessageDialog(window, textoActual);
         });
-        this.window.add(this.boton);
-        this.window.revalidate();
+        window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
+        campoTexto.setAlignmentY(TOP_ALIGNMENT);
+        window.add(campoTexto);
+        boton.setAlignmentY(CENTER_ALIGNMENT);
+        window.add(boton);
+
+        window.setVisible(true);
     }
 }
