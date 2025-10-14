@@ -8,7 +8,6 @@ public class Principal{
         boolean seguir = true;
 
         while(seguir){
-            System.out.println("Elija una opción: ");
             System.out.println("1 - Ventana básica");
             System.out.println("2 - Ventana con múltiples botones");
             System.out.println("3 - Interfaz con campos de texto");
@@ -20,8 +19,11 @@ public class Principal{
             System.out.println("9 - Checkbox");
             System.out.println("10 - Menú de barra");
             System.out.println("Salir.");
+            System.out.print("Elija una opción: ");
 
             int valor = entrada.nextInt();
+
+            System.out.println("");
 
             if(valor>0 && valor<12){
                 switch (valor) {
@@ -58,6 +60,13 @@ public class Principal{
                     break;
 
                     case 8:
+                        Ex8 proba8 = new Ex8("Exercicio8");
+                    break;
+                    case 9:
+                        Ex9 proba9 = new Ex9("Toppings");
+                    break;
+
+                    case 10:
                         
                     break;
                 }
