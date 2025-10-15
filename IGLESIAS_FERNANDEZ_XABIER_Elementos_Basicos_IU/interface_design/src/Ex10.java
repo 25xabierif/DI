@@ -13,12 +13,30 @@ diente en la consola. */
 
         window = new JFrame(titulo);
         window.setSize(400,300);
-        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
         window.setLocationRelativeTo(null);
 
         JMenuBar menu = new JMenuBar();
 
+        JMenu archivo = new JMenu("Archivo");
+        JMenu edicion = new JMenu("Edicion");
 
+        JMenuItem abrir = new JMenuItem("Abrir");
+        JMenuItem guardar = new JMenuItem("Guardar");
+
+        archivo.add(abrir);
+        archivo.add(guardar);
+
+        menu.add(archivo);
+        menu.add(edicion);
+        
+        abrir.addActionListener(e ->{
+            System.out.println("Abrir");
+        });
+        guardar.addActionListener(e ->{
+            System.out.println("Guardar");
+        });
+        
+        
         window.setJMenuBar(menu);
         window.setVisible(true);
 

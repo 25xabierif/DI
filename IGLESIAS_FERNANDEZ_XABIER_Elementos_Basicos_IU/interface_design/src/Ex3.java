@@ -17,7 +17,6 @@ consola el nombre que el usuario ha introducido */
 
         JTextField campoTexto = new JTextField("Introduce tu nombre aquí...");
         window.setLocationRelativeTo(null);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JButton boton = new JButton("Pulse aquí");
         boton.addActionListener((ActionEvent e) -> {

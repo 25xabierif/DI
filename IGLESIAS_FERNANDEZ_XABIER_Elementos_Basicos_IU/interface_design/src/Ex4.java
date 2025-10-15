@@ -17,7 +17,6 @@ mostrar un saludo personalizado en la consola con el nombre completo. */
         this.window = new JFrame(nombre);
         window.setSize(800,600);
         window.setLocationRelativeTo(null);
-        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JTextField name = new JTextField("Introduce tu nombre: ");
         JTextField surname = new JTextField("Introduce tu apellido: ");

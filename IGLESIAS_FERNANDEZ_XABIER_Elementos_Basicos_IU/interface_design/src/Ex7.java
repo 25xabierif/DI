@@ -23,7 +23,6 @@ seña puede ser simplemente leída como texto). */
         this.window = new JFrame(nombre);
         window.setSize(800,600);
         window.setLocationRelativeTo(null);
-        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
         window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
 
         JLabel usuario = new JLabel("Nombre de usuario: ");

@@ -16,7 +16,6 @@ firmar", muestra en la consola la opción seleccionada. */
         this.window = new JFrame(nombre);
         window.setSize(200,150);
         window.setLocationRelativeTo(null);
-        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
         window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
 
         ButtonGroup grupo = new ButtonGroup();

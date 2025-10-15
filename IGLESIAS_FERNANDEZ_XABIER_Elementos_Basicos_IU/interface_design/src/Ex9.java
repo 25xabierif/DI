@@ -15,7 +15,6 @@ leccionados */
         this.window = new JFrame(titulo);
         window.setSize(200,200);
         window.setLocationRelativeTo(null);
-        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
         window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
 
         final JCheckBox queso = new JCheckBox("Queso Extra");

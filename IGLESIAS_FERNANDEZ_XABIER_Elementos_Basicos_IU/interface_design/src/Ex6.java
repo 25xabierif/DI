@@ -17,7 +17,6 @@ color, muestra el color seleccionado en la consola. */
         this.window = new JFrame(nombre);
         window.setSize(800,600);
         window.setLocationRelativeTo(null);
-        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
         window.setLayout(new FlowLayout());
 
         String[] colores = {"Rojo","Azul","Verde"};

@@ -15,7 +15,6 @@ Luego, debe mostrar otro cuadro de diálogo con la edad ingresada. */
         this.window = new JFrame(nombre);
         window.setSize(800,600);
         window.setLocationRelativeTo(null);
-        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JButton boton = new JButton("Boton");
         boton.addActionListener((ActionEvent e) -> {

@@ -1,5 +1,4 @@
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 
@@ -10,24 +9,26 @@ public class Ex2 {
 el mensaje "Aceptado", y al hacer clic en "Cancelar", se debe mostrar "Cancelado". */
 
     private JFrame window;
-    private JButton boton;
 
     public Ex2 (String nombre){
         this.window = new JFrame(nombre);
         this.window.setSize(400,200);
         this.window.setLayout(new FlowLayout());
         this.window.setLocationRelativeTo(null);
-        this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.window.setVisible(true);
-    }
 
-    public void añadirBoton(String textoBoton, String mensaje){
-        this.boton = new JButton(textoBoton);
-        this.boton.addActionListener((ActionEvent e) -> {
-            JOptionPane.showMessageDialog(this.window, mensaje);
+        JButton botonAceptar = new JButton("Aceptar");
+        botonAceptar.addActionListener(e->{
+            JOptionPane.showMessageDialog(window, botonAceptar.getText(), botonAceptar.getText(), 0);
         });
-        this.window.add(this.boton);
-        this.window.revalidate();
+
+        JButton botonCancelar = new JButton("Cancelar");
+        botonCancelar.addActionListener(e->{
+            JOptionPane.showMessageDialog(window, botonCancelar.getText(), botonCancelar.getText(), 0);
+        });
+
+        this.window.add(botonAceptar);
+        this.window.add(botonCancelar);
+        this.window.setVisible(true);
     }
 
 }
