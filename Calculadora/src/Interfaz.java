@@ -59,16 +59,18 @@ public class Interfaz extends JFrame {
         JButton igual = new JButton("=");
         igual.setBackground(Color.GREEN);
         igual.addActionListener(e->{
-            try {
-                String calculo = panel.getText().replace("×", "*").replace("÷", "/");
+            if(panel.getText()!=null){
+                try {
+                    String calculo = panel.getText().replace("×", "*").replace("÷", "/");
 
-                Expression expr = new ExpressionBuilder(calculo).build();
-                int result = (int) expr.evaluate();
+                    Expression expr = new ExpressionBuilder(calculo).build();
+                    int result = (int) expr.evaluate();
 
-                panel.setText(String.valueOf(result));
+                    panel.setText(String.valueOf(result));
 
-            } catch (Exception ex) {
-                panel.setText("Error");
+                } catch (Exception ex) {
+                    panel.setText("Error");
+                }
             }
         });
         igual.addMouseListener(new java.awt.event.MouseAdapter() {
