@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medidor de volumen - Olla al fuego</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fff;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .contenedor {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+    }
+
+    /* OLLA + BARRA DE VOLUMEN */
+    .olla-area {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px; /* distancia olla-barra */
+      position: relative;
+    }
+
+    .olla {
+      position: relative;
+      width: 150px;
+      height: 100px;
+      border: 3px solid #000;
+      border-radius: 0 0 20px 20px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    /* Asa superior */
+    .olla::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 10px;
+      border: 3px solid #000;
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+    }
+
+    /* VAPOR (mejorado, animación fluida) */
+    .vapor {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      display: none;
+    }
+
+    .humo {
+      position: absolute;
+      bottom: 0;
+      width: 6px;
+      height: 25px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 50%;
+      animation: flotar 3s infinite ease-in-out;
+    }
+
+    .humo:nth-child(1) {
+      left: -20px;
+      animation-delay: 0s;
+    }
+
+    .humo:nth-child(2) {
+      left: 0;
+      animation-delay: 1s;
+    }
+
+    .humo:nth-child(3) {
+      left: 20px;
+      animation-delay: 2s;
+    }
+
+    @keyframes flotar {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.4;
+      }
+      30% {
+        transform: translateY(-10px) scale(1.1);
+        opacity: 0.8;
+      }
+      60% {
+        transform: translateY(-25px) scale(1.2);
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-40px) scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    /* BARRA DE VOLUMEN */
+    .barra-volumen {
+      width: 20px;
+      height: 130px;
+      border: 2px solid #000;
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nivel-volumen {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 0%;
+      background: #000;
+      transition: height 0.4s ease;
+    }
+
+    .porcentaje {
+      text-align: center;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    /* FUEGO BAJO LA OLLA */
+    .fuego {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .triangulo {
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 18px solid rgba(0, 0, 0, 0.2);
+      transition: border-bottom-color 0.3s, opacity 0.3s;
+    }
+
+    /* CONTROL */
+    .control {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    input[type="range"] {
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <div class="olla-area">
+      <!-- OLLA -->
+      <div class="olla">
+        <div class="vapor" id="vapor">
+          <div class="humo"></div>
+          <div class="humo"></div>
+          <div class="humo"></div>
+        </div>
+      </div>
+
+      <!-- BARRA DE VOLUMEN -->
+      <div>
+        <div class="barra-volumen">
+          <div class="nivel-volumen" id="nivel"></div>
+        </div>
+        <div class="porcentaje" id="porcentaje">Volumen: 0%</div>
+      </div>
+    </div>
+
+    <!-- FUEGO -->
+    <div class="fuego">
+      <div class="triangulo" id="t1"></div>
+      <div class="triangulo" id="t2"></div>
+      <div class="triangulo" id="t3"></div>
+    </div>
+
+    <!-- CONTROL -->
+    <div class="control">
+      <label for="intensidad">Intensidad del fuego</label>
+      <input type="range" id="intensidad" min="0" max="100" value="0" />
+    </div>
+  </div>
+
+  <script>
+    const intensidad = document.getElementById("intensidad");
+    const nivel = document.getElementById("nivel");
+    const porcentaje = document.getElementById("porcentaje");
+    const triangulos = [document.getElementById("t1"), document.getElementById("t2"), document.getElementById("t3")];
+    const vapor = document.getElementById("vapor");
+
+    intensidad.addEventListener("input", () => {
+      const valor = parseInt(intensidad.value);
+
+      // Volumen proporcional
+      nivel.style.height = `${valor}%`;
+      porcentaje.textContent = `Volumen: ${valor}%`;
+
+      // Fuego progresivo
+      triangulos.forEach((t, i) => {
+        if (valor > (i + 1) * 30) {
+          t.style.borderBottomColor = "#000";
+          t.style.opacity = 1;
+        } else {
+          t.style.borderBottomColor = "rgba(0,0,0,0.2)";
+          t.style.opacity = 0.3;
+        }
+      });
+
+      // Vapor activo si alta temperatura
+      if (valor > 80) {
+        vapor.style.display = "block";
+      } else {
+        vapor.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

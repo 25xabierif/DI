@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botón de Descarga con OVNI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            color: #2c3e50;
+        }
+
+        .subtitle {
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            color: #7f8c8d;
+        }
+
+        .download-area {
+            position: relative;
+            margin: 40px auto;
+            height: 400px;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .scene {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, #e9ecef, #f8f9fa);
+            z-index: 1;
+            border-top: 2px solid #dee2e6;
+        }
+
+        .grass {
+            position: absolute;
+            bottom: 100px;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(to top, #e9ecef, #dee2e6);
+        }
+
+        .ufo {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 60px;
+            z-index: 5;
+            transition: top 3s ease-in-out;
+            overflow: hidden;
+        }
+
+        .ufo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: drop-shadow(0 0 8px rgba(100, 200, 255, 0.7));
+        }
+
+        .tractor-beam {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 0;
+            background: linear-gradient(to bottom, rgba(100, 200, 255, 0.6), transparent);
+            border-radius: 50% 50% 0 0;
+            box-shadow: 0 0 15px 3px rgba(100, 200, 255, 0.4);
+            transition: height 1s ease-in-out;
+            z-index: 4;
+        }
+
+        .cow {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 50px;
+            z-index: 3;
+            transition: bottom 3s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .cow img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.2));
+        }
+
+        .download-btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .download-btn:active {
+            transform: translateY(1px);
+        }
+
+        .download-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            width: 0%;
+            background: #4cd964;
+            transition: width 3s linear;
+        }
+
+        .status {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            height: 24px;
+            color: #7f8c8d;
+        }
+
+        /* Animación de parpadeo para el OVNI */
+        @keyframes ufoGlow {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(100, 200, 255, 0.5)); }
+            50% { filter: drop-shadow(0 0 15px rgba(100, 200, 255, 0.7)) drop-shadow(0 0 20px rgba(100, 200, 255, 0.5)); }
+        }
+
+        .ufo img {
+            animation: ufoGlow 2s infinite alternate;
+        }
+
+        /* Animación de la vaca cuando es soltada */
+        @keyframes cowDrop {
+            0% { transform: translate(-50%, 0) rotate(0deg); }
+            100% { transform: translate(-50%, 300px) rotate(360deg); }
+        }
+
+        .completion-message {
+            margin-top: 20px;
+            padding: 15px;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 8px;
+            display: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Descarga Intergaláctica</h1>
+        <p class="subtitle">Haz clic en el botón para iniciar la descarga y observar la abducción bovina</p>
+        
+        <div class="download-area">
+            <div class="scene">
+                <div class="ufo" id="ufo">
+                    <img src="ovni.png" alt="OVNI">
+                </div>
+                <div class="tractor-beam" id="tractorBeam"></div>
+                <div class="cow" id="cow">
+                    <img src="cow.png" alt="Vaca">
+                </div>
+                <div class="grass"></div>
+                <div class="ground"></div>
+            </div>
+        </div>
+        
+        <button class="download-btn" id="downloadBtn">
+            <span>Iniciar Descarga</span>
+            <div class="progress" id="progress"></div>
+        </button>
+        
+        <div class="status" id="status">Listo para descargar</div>
+        <div class="completion-message" id="completionMessage">
+            ¡Descarga completada! La vaca ha sido liberada.
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const downloadBtn = document.getElementById('downloadBtn');
+            const progress = document.getElementById('progress');
+            const status = document.getElementById('status');
+            const ufo = document.getElementById('ufo');
+            const cow = document.getElementById('cow');
+            const tractorBeam = document.getElementById('tractorBeam');
+            const completionMessage = document.getElementById('completionMessage');
+            
+            downloadBtn.addEventListener('click', startDownload);
+            
+            function startDownload() {
+                // Deshabilitar el botón durante la descarga
+                downloadBtn.disabled = true;
+                downloadBtn.innerHTML = '<span>Descargando...</span>';
+                status.textContent = 'Descargando... 0%';
+                completionMessage.style.display = 'none';
+                
+                // Iniciar la animación de abducción
+                ufo.style.top = '50px';
+                setTimeout(() => {
+                    ufo.style.top = '150px';
+                    
+                    // Activar el rayo tractor
+                    tractorBeam.style.height = '100px';
+                    
+                    // Elevar la vaca
+                    setTimeout(() => {
+                        cow.style.bottom = '220px';
+                        
+                        // Simular progreso de descarga
+                        let progressValue = 0;
+                        const interval = setInterval(() => {
+                            progressValue += 1;
+                            progress.style.width = `${progressValue}%`;
+                            status.textContent = `Descargando... ${progressValue}%`;
+                            
+                            if (progressValue >= 100) {
+                                clearInterval(interval);
+                                completeDownload();
+                            }
+                        }, 30); // 3 segundos para completar (100 * 30ms)
+                    }, 1000);
+                }, 500);
+            }
+            
+            function completeDownload() {
+                status.textContent = '¡Descarga completada!';
+                downloadBtn.innerHTML = '<span>¡Descargado!</span>';
+                completionMessage.style.display = 'block';
+                
+                // Soltar la vaca
+                cow.style.transition = 'none';
+                cow.style.animation = 'cowDrop 1.5s forwards';
+                
+                // Restablecer después de la animación
+                setTimeout(() => {
+                    // Restablecer todo
+                    resetAnimation();
+                    
+                    // Habilitar el botón nuevamente después de un momento
+                    setTimeout(() => {
+                        downloadBtn.disabled = false;
+                        downloadBtn.innerHTML = '<span>Descargar de nuevo</span>';
+                        status.textContent = 'Listo para otra descarga';
+                        completionMessage.style.display = 'none';
+                    }, 2000);
+                }, 1500);
+            }
+            
+            function resetAnimation() {
+                // Restablecer posiciones
+                setTimeout(() => {
+                    ufo.style.top = '50px';
+                    cow.style.bottom = '120px';
+                    cow.style.animation = '';
+                    cow.style.transition = 'bottom 3s ease-in-out, transform 0.5s ease-in-out';
+                    progress.style.width = '0%';
+                    tractorBeam.style.height = '0';
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

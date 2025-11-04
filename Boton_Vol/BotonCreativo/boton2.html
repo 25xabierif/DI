@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botón de Descarga OVNI</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Fuente principal Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d111c; /* Fondo oscuro espacial */
+        }
+
+        /* Estilo base del botón/contenedor */
+        .ufo-button-container {
+            width: 280px;
+            height: 180px;
+            cursor: pointer;
+            transition: transform 0.1s ease-out;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden; /* Para contener la animación */
+        }
+
+        .ufo-button-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Contenedor del SVG para la animación */
+        .animation-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Estilos de la vaca, OVNI y rayo */
+        #cow, #ufo, #tractor-beam {
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Animación del OVNI (simulando un "bouncing" ligero) */
+        @keyframes ufo-hover {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .ufo-hovering {
+            animation: ufo-hover 3s infinite ease-in-out;
+        }
+
+        /* ANIMACIÓN DE ABDUCCIÓN (DESCARGA INICIADA) */
+        
+        /* 1. Vaca subiendo */
+        .abducting #cow {
+            transform: translateY(-60px); /* Sube la vaca */
+            opacity: 1;
+            transition: transform 1.5s ease-out, opacity 0.5s;
+        }
+
+        /* 2. Rayo encendido */
+        .abducting #tractor-beam {
+            opacity: 1;
+            transform: scaleY(1);
+            transition: opacity 0.2s, transform 0.5s;
+        }
+
+        /* 3. OVNI y vaca desapareciendo para simular la "descarga" */
+        .downloading #ufo, .downloading #cow-group {
+            transform: translateY(-100px); /* El OVNI y la vaca se van */
+            opacity: 0;
+            transition: transform 1s ease-in, opacity 0.5s 0.5s; /* Retraso para la opacidad */
+        }
+
+        /* ANIMACIÓN DE DESCARGA COMPLETA (OVNI y vaca invisible) */
+        
+        .complete .animation-area {
+            opacity: 0; /* Oculta toda la animación */
+            transition: opacity 0.3s;
+        }
+        
+        /* Checkmark apareciendo */
+        #checkmark {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.5s 0.5s, transform 0.5s 0.5s;
+        }
+
+        .complete #checkmark {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Estilos del texto */
+        .button-text {
+            transition: opacity 0.3s;
+            font-weight: 800;
+        }
+
+        .complete .button-text {
+            opacity: 0;
+        }
+
+        .complete-text {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s 0.5s, transform 0.5s 0.5s;
+        }
+
+        .complete .complete-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* El fondo del botón también cambia */
+        .background-state {
+            transition: background-color 0.5s;
+        }
+
+        .abducting .background-state {
+            background-color: #1e3a8a; /* Azul más oscuro al abducir */
+        }
+        
+        .complete .background-state {
+            background-color: #10b981; /* Verde al completar */
+        }
+
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div id="ufoButton" class="ufo-button-container bg-blue-700 hover:bg-blue-600">
+        
+        <!-- Estado de fondo cambiante -->
+        <div class="background-state absolute inset-0 bg-blue-700"></div>
+
+        <!-- Área de la Animación (SVG) -->
+        <div id="animationArea" class="animation-area flex items-center justify-center">
+            
+            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                
+                <!-- Terreno (Opción simple: una línea, puedes detallarla más) -->
+                <line x1="10" y1="85" x2="90" y2="85" stroke="#4c7c34" stroke-width="2" />
+                
+                <!-- Vaca (Grupo para animar) -->
+                <g id="cow-group" transform="translate(50, 85)">
+                    <!-- La vaca (simbolizada por un triángulo simple para la cabeza y un cuerpo) -->
+                    <path id="cow" 
+                        d="M -8 0 L 8 0 L 6 -10 L 0 -15 L -6 -10 Z" 
+                        fill="#fefefe" stroke="#333" stroke-width="0.5" 
+                        transform="translate(0, -10)" /> <!-- Posición inicial de la vaca -->
+                </g>
+                
+                <!-- OVNI -->
+                <g id="ufo-group" transform="translate(50, 20)">
+                    <ellipse id="ufo" cx="0" cy="0" rx="20" ry="8" fill="#a0aec0" stroke="#333" stroke-width="1" class="ufo-hovering" />
+                    <!-- Cúpula -->
+                    <path d="M -10 -8 Q 0 -18 10 -8 Z" fill="#4a5568" stroke="#333" stroke-width="1" />
+                    <!-- Luces (opcional) -->
+                    <circle cx="-12" cy="0" r="1.5" fill="#f56565" />
+                    <circle cx="12" cy="0" r="1.5" fill="#4299e1" />
+                </g>
+                
+                <!-- Rayo Tractor (inicialmente invisible) -->
+                <rect id="tractor-beam" 
+                      x="40" y="28" 
+                      width="20" height="57" 
+                      fill="url(#beamGradient)" 
+                      opacity="0" 
+                      transform-origin="center top" 
+                      transform="scaleY(0)"/>
+                      
+                <!-- Definición del gradiente para el rayo tractor -->
+                <defs>
+                    <linearGradient id="beamGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#bcf8f8;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#4299e1;stop-opacity:0.3" />
+                    </linearGradient>
+                </defs>
+                
+            </svg>
+            
+        </div>
+        
+        <!-- Checkmark de Completado (inicialmente invisible) -->
+        <svg id="checkmark" class="absolute inset-0 w-full h-full" viewBox="0 0 100 100" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="25 50 45 70 75 30" style="opacity:0;" id="checkmarkPath"/>
+        </svg>
+
+        <!-- Texto del Botón (Descargar / Completado) -->
+        <div class="absolute bottom-4 left-0 w-full text-center text-white text-xl">
+            <div id="textDescargar" class="button-text">DESCARGAR</div>
+            <div id="textCompletado" class="complete-text">¡COMPLETADO!</div>
+        </div>
+
+    </div>
+
+    <script>
+        // Variables globales para elementos DOM
+        const ufoButton = document.getElementById('ufoButton');
+        const cow = document.getElementById('cow-group');
+        const ufo = document.getElementById('ufo-group');
+        const tractorBeam = document.getElementById('tractor-beam');
+        const checkmark = document.getElementById('checkmark');
+        const checkmarkPath = document.getElementById('checkmarkPath');
+        const textDescargar = document.getElementById('textDescargar');
+        const textCompletado = document.getElementById('textCompletado');
+
+        // Estado del botón: 'ready', 'abducting', 'downloading', 'complete'
+        let buttonState = 'ready';
+
+        /**
+         * Función que simula el proceso de descarga.
+         * En un caso real, aquí iría tu lógica de descarga (fetch, window.location, etc.)
+         */
+        function simulateDownload() {
+            // Previene clics si ya está en proceso
+            if (buttonState !== 'ready') return;
+            
+            // 1. Inicia la abducción (preparación de descarga)
+            buttonState = 'abducting';
+            ufoButton.classList.add('abducting');
+            ufoButton.classList.remove('ready'); // Asegura que se limpia el estado anterior
+
+            // 2. Simula el tiempo de descarga mientras la vaca sube
+            setTimeout(() => {
+                // 3. Inicia la fase de desaparición (descarga en curso)
+                buttonState = 'downloading';
+                ufoButton.classList.add('downloading');
+                // Nota: la animación de desaparición está controlada por CSS en la clase 'downloading'
+                
+                // 4. Simula el tiempo de proceso de descarga/animación final
+                setTimeout(() => {
+                    // 5. Transición a estado completo
+                    buttonState = 'complete';
+                    ufoButton.classList.add('complete');
+                    ufoButton.classList.remove('abducting', 'downloading');
+                    
+                    // Añadir la animación del checkmark (dibujado)
+                    animateCheckmark();
+
+                    // Después de un tiempo, se podría resetear si se desea
+                    /*
+                    setTimeout(resetButton, 3000);
+                    */
+                    
+                }, 1000); // Tiempo que tarda el OVNI en irse
+                
+            }, 1500); // Tiempo que tarda la vaca en subir
+        }
+
+        /**
+         * Simula el dibujo del checkmark (aunque el checkmark ya aparece por CSS,
+         * esto es para añadir un efecto de "escritura").
+         */
+        function animateCheckmark() {
+            // Esta función es opcional, ya que el CSS ya maneja la aparición
+            // Para una animación de 'dibujo', usaríamos stroke-dashoffset, pero
+            // por simplicidad y compatibilidad con el CSS de 'complete', simplemente la hacemos visible.
+            checkmarkPath.style.opacity = '1';
+        }
+
+        /**
+         * Resetea el botón a su estado inicial.
+         */
+        function resetButton() {
+            buttonState = 'ready';
+            ufoButton.classList.remove('abducting', 'downloading', 'complete');
+            
+            // Resetear transformaciones de SVG si no se resetean solas con la clase
+            cow.style.transform = 'translate(50px, 85px)'; // O la posición inicial
+            ufo.style.transform = 'translate(50px, 20px)';
+            checkmarkPath.style.opacity = '0';
+        }
+
+        // Asignar el evento click al botón
+        ufoButton.addEventListener('click', simulateDownload);
+
+    </script>
+</body>
+</html>
