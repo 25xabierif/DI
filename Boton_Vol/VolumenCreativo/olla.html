@@ -3,235 +3,150 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Medidor de volumen - Olla al fuego</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+
+  <title>Medidor de Volumen y Temperatura con Vapor</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #fff;
-      color: #000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      background: #f5f5f5;
       height: 100vh;
-      margin: 0;
-    }
-
-    .contenedor {
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 25px;
+      font-family: sans-serif;
     }
 
-    /* OLLA + BARRA DE VOLUMEN */
-    .olla-area {
+    .container {
       display: flex;
-      align-items: flex-start;
-      gap: 30px; /* distancia olla-barra */
-      position: relative;
+      align-items: center;
+      gap: 50px;
     }
 
     .olla {
       position: relative;
       width: 150px;
-      height: 100px;
-      border: 3px solid #000;
-      border-radius: 0 0 20px 20px;
-      background: #fff;
+      height: 200px;
+      border: 6px solid #555;
+      border-radius: 10px 10px 30px 30px;
       overflow: hidden;
+      background: linear-gradient(to bottom, #ddd, #aaa);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
     }
 
-    /* Asa superior */
-    .olla::before {
-      content: "";
-      position: absolute;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 10px;
-      border: 3px solid #000;
-      border-bottom: none;
-      border-radius: 10px 10px 0 0;
-    }
-
-    /* VAPOR (mejorado, animación fluida) */
-    .vapor {
-      position: absolute;
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      pointer-events: none;
-      display: none;
-    }
-
-    .humo {
-      position: absolute;
-      bottom: 0;
-      width: 6px;
-      height: 25px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 50%;
-      animation: flotar 3s infinite ease-in-out;
-    }
-
-    .humo:nth-child(1) {
-      left: -20px;
-      animation-delay: 0s;
-    }
-
-    .humo:nth-child(2) {
-      left: 0;
-      animation-delay: 1s;
-    }
-
-    .humo:nth-child(3) {
-      left: 20px;
-      animation-delay: 2s;
-    }
-
-    @keyframes flotar {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.4;
-      }
-      30% {
-        transform: translateY(-10px) scale(1.1);
-        opacity: 0.8;
-      }
-      60% {
-        transform: translateY(-25px) scale(1.2);
-        opacity: 0.6;
-      }
-      100% {
-        transform: translateY(-40px) scale(1.3);
-        opacity: 0;
-      }
-    }
-
-    /* BARRA DE VOLUMEN */
-    .barra-volumen {
-      width: 20px;
-      height: 130px;
-      border: 2px solid #000;
-      border-radius: 5px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .nivel-volumen {
+    .rellenar {
       position: absolute;
       bottom: 0;
       width: 100%;
       height: 0%;
-      background: #000;
-      transition: height 0.4s ease;
+      background: linear-gradient(to top, blue, red);
+      transition: height 1s ease, background 1s ease;
     }
 
     .porcentaje {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      width: 100%;
       text-align: center;
-      margin-top: 5px;
-      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.6);
     }
 
-    /* FUEGO BAJO LA OLLA */
-    .fuego {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 5px;
-    }
-
-    .triangulo {
-      width: 0;
-      height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-bottom: 18px solid rgba(0, 0, 0, 0.2);
-      transition: border-bottom-color 0.3s, opacity 0.3s;
-    }
-
-    /* CONTROL */
     .control {
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 14px;
+    }
+    .control .barra-etiqueta{
+      margin-bottom: 40px;
+    }
+    .control .temperatura{
+      margin-top: 40px;
+    }
+    .barra-etiqueta {
+      font-weight: bold;
+      margin-bottom: 10px;
     }
 
-    input[type="range"] {
-      width: 200px;
+    .barra {
+      width: 100px;
+      transform: rotate(-90deg);
+      accent-color: #ff6600;
+    }
+
+    .temperatura {
+      margin-top: 15px;
+      font-size: 1.2em;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div class="contenedor">
-    <div class="olla-area">
-      <!-- OLLA -->
-      <div class="olla">
-        <div class="vapor" id="vapor">
-          <div class="humo"></div>
-          <div class="humo"></div>
-          <div class="humo"></div>
-        </div>
-      </div>
-
-      <!-- BARRA DE VOLUMEN -->
-      <div>
-        <div class="barra-volumen">
-          <div class="nivel-volumen" id="nivel"></div>
-        </div>
-        <div class="porcentaje" id="porcentaje">Volumen: 0%</div>
-      </div>
+  <div class="container">
+    <div class="olla">
+      <div class="rellenar" id="rellenar"></div>
+      <div class="porcentaje" id="porcentaje">0%</div>
     </div>
 
-    <!-- FUEGO -->
-    <div class="fuego">
-      <div class="triangulo" id="t1"></div>
-      <div class="triangulo" id="t2"></div>
-      <div class="triangulo" id="t3"></div>
-    </div>
-
-    <!-- CONTROL -->
     <div class="control">
-      <label for="intensidad">Intensidad del fuego</label>
-      <input type="range" id="intensidad" min="0" max="100" value="0" />
+      <div class="barra-etiqueta">Temperatura</div>
+      <input type="range" min="0" max="100" value="0" id="tempRange" class="barra" />
+      <div class="temperatura" id="tempValue">0°C</div>
     </div>
   </div>
 
   <script>
-    const intensidad = document.getElementById("intensidad");
-    const nivel = document.getElementById("nivel");
-    const porcentaje = document.getElementById("porcentaje");
-    const triangulos = [document.getElementById("t1"), document.getElementById("t2"), document.getElementById("t3")];
-    const vapor = document.getElementById("vapor");
+    const tempRange = document.getElementById('tempRange');
+    const tempValue = document.getElementById('tempValue');
+    const rellenar = document.getElementById('rellenar');
+    const porcentaje = document.getElementById('porcentaje');
+    const olla = document.querySelector('.olla');
 
-    intensidad.addEventListener("input", () => {
-      const valor = parseInt(intensidad.value);
+    let targetVolume = 0;
+    let volActual = 0;
+    let currentTemp = 0;
 
-      // Volumen proporcional
-      nivel.style.height = `${valor}%`;
-      porcentaje.textContent = `Volumen: ${valor}%`;
+    let hervir = false;
 
-      // Fuego progresivo
-      triangulos.forEach((t, i) => {
-        if (valor > (i + 1) * 30) {
-          t.style.borderBottomColor = "#000";
-          t.style.opacity = 1;
-        } else {
-          t.style.borderBottomColor = "rgba(0,0,0,0.2)";
-          t.style.opacity = 0.3;
-        }
-      });
+    // Actualiza el volumen con retardo
+    function animarVol() {
+      volActual += (targetVolume - volActual) * 0.05;
 
-      // Vapor activo si alta temperatura
-      if (valor > 80) {
-        vapor.style.display = "block";
-      } else {
-        vapor.style.display = "none";
+      const red = Math.round(volActual * 2.55);
+      const blue = Math.round(255 - volActual * 2.55);
+      const color = `linear-gradient(to top, rgb(${red}, 0, ${blue}), red)`;
+
+      rellenar.style.height = `${volActual}%`;
+      rellenar.style.background = color;
+      porcentaje.textContent = `${Math.round(volActual)}%`;
+
+
+
+      if(volActual > 99 && !hervir){
+        hervir = true;
+        const notyf = new Notyf({
+          duration: 3000,
+          position: { x: 'right', y: 'top' }
+        });
+        notyf.success('¡El volumen está al máximo!');
       }
-    });
+      if(volActual < 90 && hervir){
+        hervir = false;
+      }
+
+      requestAnimationFrame(animarVol);
+    }
+
+    animarVol();
+
+    // Control de temperatura
+    tempRange.addEventListener('input', () => {
+      currentTemp = parseInt(tempRange.value);
+      tempValue.textContent = `${currentTemp}°C`;
+      targetVolume = Math.min(100, currentTemp);
+    })
   </script>
 </body>
 </html>
