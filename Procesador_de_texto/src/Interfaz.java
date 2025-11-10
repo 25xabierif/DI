@@ -90,7 +90,7 @@ public class Interfaz extends JFrame{
 
         JMenuItem guardar = new JMenuItem("Guardar");
         guardar.addActionListener(a -> {
-           JFileChooser fileChooser = new JFileChooser();
+            JFileChooser fileChooser = new JFileChooser();
 
             Path directorioRaiz = Paths.get("/media/a25xabierif/a25xabierif_documentos");
             fileChooser.setCurrentDirectory(directorioRaiz.toFile());
