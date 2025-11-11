@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+  <title>Olla medir vol</title>
+  <link rel="stylesheet" href="vol_style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="olla">
+      <div class="rellenar" id="rellenar"></div>
+      <div class="porcentaje" id="porcentaje">0%</div>
+    </div>
+
+    <div class="control">
+      <div class="barra-etiqueta">Temperatura</div>
+      <input type="range" min="0" max="100" value="0" id="tempRange" class="barra" />
+      <div class="temperatura" id="tempValue">0°C</div>
+    </div>
+  </div>
+  <script src="vol_script.js"></script>
+</body>
+</html>
